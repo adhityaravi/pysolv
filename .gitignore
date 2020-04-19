@@ -1,0 +1,11 @@
+# ignore the python virtual environment 
+venv/
+
+# ignore personal IDE related configurations
+.idea/
+
+# ignore all the compiled code
+*.pyc
+
+# ignore all log files
+*.log
