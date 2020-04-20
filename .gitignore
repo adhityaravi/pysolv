@@ -9,3 +9,6 @@ venv/
 
 # ignore all log files
 *.log
+
+# ignore pycache initiations
+__pycache__/
