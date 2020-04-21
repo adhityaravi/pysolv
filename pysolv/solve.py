@@ -37,3 +37,7 @@ def solve(A, b, solver='jacobi', **kwargs):
 
     # call the appropriate solver to solve the linear system
     call_solver()
+
+    # return the solution
+    return Data.__dict__['x']
+
