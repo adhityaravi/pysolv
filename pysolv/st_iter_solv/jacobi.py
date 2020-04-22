@@ -27,7 +27,7 @@ Properties:
 
 3. Can become memory expensive for large systems as duplication of the solution vector x(k) is necessary.
 
-4. Conventional Jacobi scheme cannot handle non-square A matrices. An update Jacobi scheme called generalized
+4. Conventional Jacobi scheme cannot handle non-square A matrices. An updated Jacobi scheme called generalized
    Jacobi is required.
 """
 
@@ -57,7 +57,7 @@ class JacobiSolve(Data):
 
         try:
             self.x0
-        except NameError:
+        except AttributeError:
             self.x0 = np.ones_like(self.b)
 
         # initialize the solution vectors
@@ -98,15 +98,15 @@ class JacobiSolve(Data):
                     # x_i(k) = (1/a_i_i) * sum
                     self.x[i] = (1/self.A[i, i]) * sum_
 
-                    # stopping criteria: (||x(iter) - x(iter-1)|| / ||x(iter)) < TOL
-                    # ToDo: Implement a pysolv native function to compute the residual
-                    res = np.linalg.norm(np.divide((self.x - self.x_old), self.x_old))
-                    if res < self.TOL:
-                        break
+                # stopping criteria: (||x(iter) - x(iter-1)|| / ||x(iter)) < TOL
+                # ToDo: Implement a pysolv native function to compute the residual
+                res = np.linalg.norm(np.divide((self.x - self.x_old), self.x_old))
+                if res < self.TOL:
+                    break
 
-                    # update the iteration counter and x(iter -1)
-                    self.x_old = self.x
-                    iter += 1
+                # update the iteration counter and x(iter -1)
+                self.x_old = self.x.copy()
+                iter += 1
 
             # add the solution to the Data class
             Data.add_data('x', self.x)

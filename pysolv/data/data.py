@@ -17,7 +17,7 @@ class Data:
 
     # general solver settings
     ITERMAX = 3000
-    TOL = 1e-4
+    TOL = 1e-6
 
     def __init__(self):
         """Initialize the class that inherits Data class with all the attributes of the Data class
