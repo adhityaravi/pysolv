@@ -39,5 +39,5 @@ def solve(A, b, solver='jacobi', **kwargs):
     call_solver()
 
     # return the solution
-    return Data.__dict__['x']
+    return Data.x
 

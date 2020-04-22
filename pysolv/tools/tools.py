@@ -44,16 +44,16 @@ def ext_lsprops():
 
     # sanity checks
     # check if the input values are of type numpy array
-    if not isinstance(Data.__dict__['A'], np.ndarray):
-        msg = 'Expected {}. Got {}'.format(type(np.ndarray(0)), type(Data.__dict__['A']))
+    if not isinstance(Data.A, np.ndarray):
+        msg = 'Expected {}. Got {}'.format(type(np.ndarray(0)), type(Data.A))
         raise TypeError(msg)
-    if not isinstance(Data.__dict__['b'], np.ndarray):
-        msg = 'Expected {}. Got {}'.format(type(np.ndarray(0)), type(Data.__dict__['b']))
+    if not isinstance(Data.b, np.ndarray):
+        msg = 'Expected {}. Got {}'.format(type(np.ndarray(0)), type(Data.b))
         raise TypeError(msg)
 
     # shape of the coefficient matrix
     try:
-        m, n = Data.__dict__['A'].shape
+        m, n = Data.A.shape
         if m == 1:
             msg = 'The minimum size of A matrix is 2x2'
             raise ValueError(msg)
@@ -65,7 +65,7 @@ def ext_lsprops():
         raise ValueError(msg)
 
     # check if the dimensions of the A matrix and the b vector match
-    if m != Data.__dict__['b'].size:
+    if m != Data.b.size:
         msg = 'Input array dimensions do not match'
         raise DimensionMismatchException(msg)
 
@@ -78,7 +78,7 @@ def call_solver():
     """Call the requested solver to solve the linear system of equations
     """
 
-    if Data.__dict__['solver'] == 'jacobi':
+    if Data.solver == 'jacobi':
         JacobiSolve()
     else:
         print('wubba lubba dub dub')
