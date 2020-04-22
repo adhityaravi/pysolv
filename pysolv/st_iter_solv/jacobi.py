@@ -58,11 +58,11 @@ class JacobiSolve(Data):
         try:
             self.x0
         except AttributeError:
-            self.x0 = np.ones_like(self.b)
+            self.x0 = np.ones(self.n)
 
         # initialize the solution vectors
-        self.x = np.empty(self.b.size)  # solution at the i'th iteration
-        self.x_old = np.empty(self.b.size)  # duplication to store the solution from i-1 iteration
+        self.x = np.empty(self.n)  # solution at the i'th iteration
+        self.x_old = np.empty(self.n)  # duplication to store the solution from i-1 iteration
 
     def solve(self):
         """Serial python implementation of conventional Jacobi solver.
@@ -98,7 +98,7 @@ class JacobiSolve(Data):
                     # x_i(k) = (1/a_i_i) * sum
                     self.x[i] = (1/self.A[i, i]) * sum_
 
-                # stopping criteria: (||x(iter) - x(iter-1)|| / ||x(iter)) < TOL
+                # stopping criteria: (||x(iter) - x(iter-1)|| / ||x(iter)||) < TOL
                 # ToDo: Implement a pysolv native function to compute the residual
                 res = np.linalg.norm(np.divide((self.x - self.x_old), self.x_old))
                 if res < self.TOL:

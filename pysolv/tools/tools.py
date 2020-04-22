@@ -37,6 +37,7 @@ def add_kwargs(kwargs):
     for key, value in kwargs.items():
         Data.add_data(key, value)
 
+
 def ext_lsprops():
     """Extract various properties of the linear system like the size, etc. and store it in the Data class
     """
@@ -53,6 +54,12 @@ def ext_lsprops():
     # shape of the coefficient matrix
     try:
         m, n = Data.__dict__['A'].shape
+        if m == 1:
+            msg = 'The minimum size of A matrix is 2x2'
+            raise ValueError(msg)
+        elif n == 1:
+            msg = 'The minimum size of A matrix is 2x2'
+            raise ValueError(msg)
     except ValueError:
         msg = 'The minimum size of A matrix is 2x2'
         raise ValueError(msg)
@@ -61,14 +68,11 @@ def ext_lsprops():
     if m != Data.__dict__['b'].size:
         msg = 'Input array dimensions do not match'
         raise DimensionMismatchException(msg)
-    # check if (equations >= unknowns) in A
-    if m < n:
-        msg = 'Cannot handle linear system with no. of equations less than the no. of unknowns'
-        raise ValueError(msg)
 
     # add the dimensions of the linear system to the Data class
     Data.add_data('m', m)
     Data.add_data('n', n)
+
 
 def call_solver():
     """Call the requested solver to solve the linear system of equations
@@ -76,3 +80,5 @@ def call_solver():
 
     if Data.__dict__['solver'] == 'jacobi':
         JacobiSolve()
+    else:
+        print('wubba lubba dub dub')
