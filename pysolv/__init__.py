@@ -1,4 +1,4 @@
-# author: Adhitya Sriram Ravi
+# author: Adhitya-Sriram Ravi
 
 # resolve path conflicts (only for testing purpose)
 # ToDo: remove before packaging
