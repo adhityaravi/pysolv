@@ -12,3 +12,6 @@ venv/
 
 # ignore pycache initiations
 __pycache__/
+
+# ignore test file on local machine
+tests/test.py

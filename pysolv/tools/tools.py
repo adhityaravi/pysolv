@@ -80,5 +80,9 @@ def call_solver():
 
     if Data.solver == 'jacobi':
         JacobiSolve()
+
+    elif Data.solver == 'gaussseidel':
+        GaussSeidelSolve()
+
     else:
         print('wubba lubba dub dub')
