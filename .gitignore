@@ -12,3 +12,6 @@ venv/
 
 # ignore pycache initiations
 __pycache__/
+
+# ignore the benchmarking data generated for pysolv optimization
+pysolv_benchmarks/
