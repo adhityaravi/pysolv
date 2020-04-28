@@ -62,7 +62,7 @@ class JacobiSolve(Data):
 
         # initialize the solution vectors
         self.x = np.empty(self.n)  # solution at the i'th iteration
-        self.x_old = np.empty(self.n)  # duplication to store the solution from i-1 iteration
+        self.x_old = self.x0  # duplication to store the solution from i-1 iteration
 
     def solve(self):
         """Serial python implementation of conventional Jacobi solver.
@@ -77,9 +77,8 @@ class JacobiSolve(Data):
         # Jacobi iteration:
         # x_i(iter) = (1/a_i_i)(b_i - sum(a_i_j * x_j(iter-1))) where, i = 1 to n, j = 1 to n & j != i
         else:
-            # initialize iteration counter and solution vector
+            # initialize iteration counter
             iter = 0
-            self.x_old = self.x0
 
             # continue the iteration till the iteration counter reaches the maximum count if convergence is not
             # obtained
