@@ -13,7 +13,7 @@ sparse scipy arrays and for handling huge pytables.
 class Data:
 
     # available solvers in pysolv
-    SOLVERS = ['jacobi']
+    SOLVERS = ['jacobi', 'gaussseidel']
 
     # general solver settings
     ITERMAX = 3000
