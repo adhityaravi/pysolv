@@ -13,5 +13,5 @@ venv/
 # ignore pycache initiations
 __pycache__/
 
-# ignore test file on local machine
-tests/test.py
+# ignore the benchmarking data generated for pysolv optimization
+pysolv_benchmarks/

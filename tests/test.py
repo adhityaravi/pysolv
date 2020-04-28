@@ -1,5 +1,6 @@
 import sys
-sys.path.append('/home/aravinth/pysolv')
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import pysolv
 import numpy as np
