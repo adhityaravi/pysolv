@@ -13,11 +13,15 @@ sparse scipy arrays and for handling huge pytables.
 class Data:
 
     # available solvers in pysolv
-    SOLVERS = ['jacobi', 'gaussseidel']
+    SOLVERS = ['jacobi', 'gaussseidel', 'sor', 'ssor']
 
-    # general solver settings
+    # general solver settings (can be over-ridden by user)
     ITERMAX = 3000
     TOL = 1e-6
+
+    # attributes acquired from other classes by the Data class. Declared as private and for internal use only by the
+    # Data class
+    __acquired_attrs = []
 
     def __init__(self):
         """Initialize the class that inherits Data class with all the attributes of the Data class
@@ -35,6 +39,7 @@ class Data:
         """
 
         setattr(Data, name, data)
+        Data.__acquired_attrs.append(name)
 
     def _get_attr(self):
         """Pass the __dict__ of the Data class to any child class of Data class
@@ -43,5 +48,17 @@ class Data:
         for name, data in Data.__dict__.items():
             try:
                 setattr(self, name, data)
+            except (TypeError, AttributeError):
+                continue
+
+    @staticmethod
+    def __reset_data():
+        """Flush all the attributes from the Data class. This method is intended to be a private static method. Call
+           to this function from outside classes is not recommended.
+        """
+
+        for attr in Data.__acquired_attrs:
+            try:
+                delattr(Data, attr)
             except (TypeError, AttributeError):
                 continue

@@ -16,5 +16,8 @@ b = np.array(b)
 x = pysolv.solve(A, b, 'Jacobi')
 print(x)
 
-x = pysolv.solve(A, b, 'Gaussseidel')
+x = pysolv.solve(A, b, 'Gauss-Seidel')
+print(x)
+
+x = pysolv.solve(A, b, 'SOR', ITERMAX=1000)
 print(x)

@@ -22,7 +22,7 @@ def solve(A, b, solver='jacobi', **kwargs):
         x (numpy array): solution to the linear system
     """
 
-    # add the coeeficient matrix, RHS vector to the Data class
+    # add the coefficient matrix, RHS vector to the Data class
     Data.add_data('A', A)
     Data.add_data('b', b)
 
@@ -38,6 +38,14 @@ def solve(A, b, solver='jacobi', **kwargs):
     # call the appropriate solver to solve the linear system
     call_solver()
 
-    # return the solution
-    return Data.x
+    # fetch the solution from the Data class
+    x = Data.x
 
+    # print linear solver information
+    verbate(solver)
+
+    # flush the Data class clean
+    Data._Data__reset_data()
+
+    # return the solution
+    return x
