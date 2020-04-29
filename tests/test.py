@@ -19,5 +19,8 @@ print(x)
 x = pysolv.solve(A, b, 'Gauss-Seidel')
 print(x)
 
-x = pysolv.solve(A, b, 'SOR', ITERMAX=1000)
+x = pysolv.solve(A, b, 'SOR')
+print(x)
+
+x = pysolv.solve(A, b, 'SSOR', omega=1.3, verbose=True)
 print(x)
