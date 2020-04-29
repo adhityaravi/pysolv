@@ -87,6 +87,9 @@ def call_solver():
     elif Data.solver == 'sor':
         SORSolve()
 
+    elif Data.solver == 'ssor':
+        SSORSolve()
+
     else:
         print('wubba lubba dub dub')
 

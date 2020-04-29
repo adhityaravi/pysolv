@@ -36,6 +36,7 @@ from data import *
 import numpy as np
 import time as ti
 
+
 class SORSolve(Data):
 
     def __init__(self):
@@ -110,7 +111,7 @@ class SORSolve(Data):
                         sum_ = sum_ + (self.A[i, j] * self.x[j])
 
                     # sum_(j=i + 1) ^ (n)(A_i_j * x_j(iter - 1))
-                    for j in range(i + 1, self.n):
+                    for j in range(i+1, self.n):
                         sum_ = sum_ + (self.A[i, j] * self.x_old[j])
 
                     # x_i(iter) = (1-omega) * x_i(iter-1) + ((omega/a_i_i) * (b_i - s1 -s2)
