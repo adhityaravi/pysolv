@@ -48,6 +48,9 @@ class JacobiSolve(Data):
         # initialize solution vector
         self.init_x0()
 
+        # check for relaxation parameter
+        self._check_omega()
+
         # call the jacobi solver
         self.solve()
 
@@ -63,6 +66,16 @@ class JacobiSolve(Data):
         # initialize the solution vectors
         self.x = np.empty(self.n)  # solution at the i'th iteration
         self.x_old = self.x0  # duplication to store the solution from i-1 iteration
+
+    def _check_omega(self):
+        """Check if the user has prescribed a value for the relaxation parameter. If not, prescribe a value of 1 (Jacobi
+        iterations are un-damped by default)
+        """
+
+        try:
+            self.omega
+        except AttributeError:
+            self.omega = 1
 
     def solve(self):
         """Serial python implementation of conventional Jacobi solver.
@@ -95,10 +108,9 @@ class JacobiSolve(Data):
 
                     sum_ = self.b[i] - sum_
                     # x_i(k) = (1/a_i_i) * sum
-                    self.x[i] = (1/self.A[i, i]) * sum_
+                    self.x[i] = self.omega * (1/self.A[i, i]) * sum_
 
                 # stopping criteria: (||x(iter) - x(iter-1)|| / ||x(iter)||) < TOL
-                # ToDo: Implement a pysolv native function to compute the residual
                 res = np.linalg.norm(np.divide((self.x - self.x_old), self.x_old))
                 if res < self.TOL:
                     break

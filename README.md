@@ -6,11 +6,11 @@ etc for Python 3.</p>
 
 <p>The motivation behind PySolv is to create one-stop-shop python package for most of the available iterative linear 
 solvers. PySolv is focused majorly on iterative linear solvers and currently PySolv is not intended to be a generalized
-linear algebra pacakge with fucntionalities like singualr value decomposition, matrix factorizations etc.</p>
+linear algebra package with functionalities like singular value decomposition, matrix factorizations etc.</p>
 
 ## Getting started
 
-See **Usage** notes on how to use the installed PySolv pacakge. To install PySolv on your local system, the following 
+See **Usage** notes on how to use the installed PySolv package. To install PySolv on your local system, the following 
 steps are necessary:
 
 ### Requirements
@@ -54,7 +54,7 @@ PySolv can be imported into Python using the following command
     |---------|-----|
     |solver| The type of solver to be used to solve the linear system. Type: str. Possible options are: 'Jacobi', 'Gauss-Seidel', 'SOR', 'SSOR', 'Richardson'. Jacobi solver is used by default.|
     |ITERMAX| The maximum number of iterations that the linear solver is allowed to iterate. Type: int. The default value is set to 3000.|
-    |TOL| The tolerance value for stopping the linear solver. Type: float. The deault value is set to 1e-6.|
+    |TOL| The tolerance value for stopping the linear solver. Type: float. The default value is set to 1e-6.|
     |omega| Relaxation parameter. Type: float. Significant only for SOR, SSOR and Jacobi solvers. For SOR and SSOR, the default value is taken as 1.7. Jacobi iterations can also be damped with omega. But, by default, the omega value is taken as 1 for Jacobi.|
     
   **Returns:**
