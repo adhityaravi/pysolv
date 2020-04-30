@@ -13,14 +13,14 @@ A = np.array(A)
 b = [6, 7, 15]
 b = np.array(b)
 
-x = pysolv.solve(A, b, 'Jacobi')
+# x = pysolv.solve(A, b, 'Jacobi')
+# print(x)
+#
+# x = pysolv.solve(A, b, 'Gauss-Seidel')
+# print(x)
+
+x, *_ = pysolv.solve(A, b, 'SOR')
 print(x)
 
-x = pysolv.solve(A, b, 'Gauss-Seidel')
-print(x)
-
-x = pysolv.solve(A, b, 'SOR')
-print(x)
-
-x = pysolv.solve(A, b, 'SSOR', omega=1.3, verbose=True)
+x, *_ = pysolv.solve(A, b, 'SSOR', omega=1.3, verbose=True)
 print(x)

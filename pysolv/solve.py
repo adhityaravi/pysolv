@@ -20,6 +20,9 @@ def solve(A, b, solver='jacobi', **kwargs):
 
     Returns:
         x (numpy array): solution to the linear system
+        res (float): residual with which the linear solver converged
+        it (int): number of iterations at which the linear solver converged
+        time_taken (float): time taken by the linear solver to converge in [s]
     """
 
     # add the coefficient matrix, RHS vector to the Data class
@@ -40,12 +43,12 @@ def solve(A, b, solver='jacobi', **kwargs):
 
     # fetch the solution from the Data class
     x = Data.x
-
-    # print linear solver information
-    verbate(solver)
+    time_taken = Data.time_taken
+    res = Data.residual
+    it = Data.iterations
 
     # flush the Data class clean
     Data._Data__reset_data()
 
     # return the solution
-    return x
+    return x, res, it, time_taken

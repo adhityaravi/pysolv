@@ -92,18 +92,3 @@ def call_solver():
 
     else:
         print('wubba lubba dub dub')
-
-
-def verbate(solver):
-    """Print linear solver information including time taken, residual, no. of iterations etc.
-    """
-
-    try:
-        if Data.verbose:
-            print('The {} linear solver converged'.format(solver))
-            print('\tin {} s'.format(Data.time_taken))
-            print('\tin {} iterations'.format(Data.iterations))
-            print('\twith a residual of {}'.format(Data.residual))
-
-    except AttributeError:
-        pass
