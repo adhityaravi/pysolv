@@ -45,31 +45,17 @@ PySolv can be imported into Python using the following command
   
     |Argument|Usage|
     |---------|-----|
-    |A| Coefficient matrix.|
-    | | Type: 2D numpy array|
-    | | Note: It must be a 2D square matrix of full rank.|
-    |b| RHS vector (dependent variable values).|
-    | | Type: 1D numpy array|
+    |A| Coefficient matrix. Type: 2D numpy array. Note: It must be a 2D square matrix of full rank.|
+    |b| RHS vector (dependent variable values). Type: 1D numpy array|
 
   **Keyword Arguments:**
   
     |Argument|Usage|
     |---------|-----|
-    |solver| The type of solver to be used to solve the linear system.|
-    |      | Type: str|
-    |      | Possible options are: 'Jacobi', 'Gauss-Seidel', 'SOR', 'SSOR', 'Richardson'.|
-    |      | Jacobi solver is used by default.|
-    |ITERMAX| The maximum number of iterations that the linear solver is allowed to iterate.|
-    |       | Type: int|
-    |       | The default value is set to 3000.|
-    |TOL| The tolerance value for stopping the linear solver.|
-    |   | Type: float|
-    |   | The deault value is set to 1e-6.|
-    |omega| Relaxation parameter|
-    |     | Type: float|
-    |     | Significant only for SOR, SSOR and Jacobi solvers|
-    |     | For SOR and SSOR, the default value is taken as 1.7.| 
-    |     |Jacobi iterations can also be damped with omega. But, by default, the omega value is taken as 1 for Jacobi.|
+    |solver| The type of solver to be used to solve the linear system. Type: str. Possible options are: 'Jacobi', 'Gauss-Seidel', 'SOR', 'SSOR', 'Richardson'. Jacobi solver is used by default.|
+    |ITERMAX| The maximum number of iterations that the linear solver is allowed to iterate. Type: int. The default value is set to 3000.|
+    |TOL| The tolerance value for stopping the linear solver. Type: float. The deault value is set to 1e-6.|
+    |omega| Relaxation parameter. Type: float. Significant only for SOR, SSOR and Jacobi solvers. For SOR and SSOR, the default value is taken as 1.7. Jacobi iterations can also be damped with omega. But, by default, the omega value is taken as 1 for Jacobi.|
     
   **Returns:**
   
