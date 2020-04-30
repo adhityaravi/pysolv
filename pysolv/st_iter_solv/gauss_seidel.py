@@ -36,23 +36,26 @@ Properties:
 # import the necessary packages
 from data import *
 import numpy as np
+import time as ti
 
 
 class GaussSeidelSolve(Data):
 
     def __init__(self):
-        """Initialize the class with the necessary inheritance and solve the linear system"""
+        """Initialize the class with the necessary inheritance and solve the linear system
+           ToDO: Deprecate Gauss-Seidel _solve() and rather call SOR with omega=1
+        """
 
         # data inheritance
         Data.__init__(self)
 
         # initialize solution vector
-        self.init_x0()
+        self._init_x0()
 
         # call the gauss seidel solver
-        self.solve()
+        self._solve()
 
-    def init_x0(self):
+    def _init_x0(self):
         """Check if an initial value exists for the solution vector or initialize the solution vector"""
 
         try:
@@ -64,7 +67,7 @@ class GaussSeidelSolve(Data):
         self.x = np.empty(self.n)   # solution vector at the i'th iteration
         self.x_old = self.x0  # solution vector at the i-1'th iteration
 
-    def solve(self):
+    def _solve(self):
         """Serial python implementation of Gauss Seidel solver."""
 
         # currently cannot handle non square systems in Gauss-seidel
@@ -76,6 +79,9 @@ class GaussSeidelSolve(Data):
         # Gauss-Seidel iterations
         # x_i(iter) = (1/a_i_i)(b_i - sum_(j=1)^(i-1)(a_i_j * x_j(iter)) - sum_(j=i+1)^(n)(A_i_j * x_j(iter-1)))
         else:
+            # time the solver
+            start_time = ti.time()
+
             # Initialize the iteration counter and solution vector
             iter = 0
 
@@ -102,5 +108,11 @@ class GaussSeidelSolve(Data):
                 self.x_old = self.x.copy()
                 iter += 1
 
+            # time taken for convergence
+            time_taken = ti.time() - start_time
+
             # add the solution to the Data class
             Data.add_data('x', self.x)
+            Data.add_data('time_taken', time_taken)
+            Data.add_data('iterations', iter - 1)
+            Data.add_data('residual', res)
