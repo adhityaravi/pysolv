@@ -34,6 +34,7 @@ Properties:
 # import the necessary packages
 from data import *
 import numpy as np
+import time as ti
 
 
 class JacobiSolve(Data):
@@ -46,15 +47,15 @@ class JacobiSolve(Data):
         Data.__init__(self)
 
         # initialize solution vector
-        self.init_x0()
+        self._init_x0()
 
         # check for relaxation parameter
         self._check_omega()
 
         # call the jacobi solver
-        self.solve()
+        self._solve()
 
-    def init_x0(self):
+    def _init_x0(self):
         """Check if an initial value exists for the solution vector or initialize the solution vector
         """
 
@@ -77,7 +78,7 @@ class JacobiSolve(Data):
         except AttributeError:
             self.omega = 1
 
-    def solve(self):
+    def _solve(self):
         """Serial python implementation of conventional Jacobi solver.
         """
 
@@ -90,6 +91,9 @@ class JacobiSolve(Data):
         # Jacobi iteration:
         # x_i(iter) = (1/a_i_i)(b_i - sum(a_i_j * x_j(iter-1))) where, i = 1 to n, j = 1 to n & j != i
         else:
+            # time the solver
+            start_time = ti.time()
+
             # initialize iteration counter
             iter = 0
 
@@ -119,5 +123,11 @@ class JacobiSolve(Data):
                 self.x_old = self.x.copy()
                 iter += 1
 
+            # time taken for convergence
+            time_taken = ti.time() - start_time
+
             # add the solution to the Data class
             Data.add_data('x', self.x)
+            Data.add_data('time_taken', time_taken)
+            Data.add_data('iterations', iter - 1)
+            Data.add_data('residual', res)
