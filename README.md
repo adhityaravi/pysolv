@@ -75,14 +75,10 @@ PySolv can be imported into Python using the following command
   
     |Return|Value|
     |---------|-----|
-    |x| Approximated solution to the input linear system.|
-    | | Type: 1D numpy array (matches with the shape of b)|
-    |res| Convergence residual of the linear solver|
-    |   | Type: float|
-    |it| Convergence iteration number of the linear solver|
-    |  | Type: int|
-    |time_taken| Time taken by the linear solver for convergence in seconds|
-    |          | Type: float|
+    |x| Approximated solution to the input linear system. Type: 1D numpy array (matches with the shape of b)|
+    |res| Convergence residual of the linear solver. Type: float.|
+    |it| Convergence iteration number of the linear solver. Type: int.|
+    |time_taken| Time taken by the linear solver for convergence in seconds. Type: float.|
 
   **Examples**
   
