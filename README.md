@@ -86,7 +86,7 @@ PySolv can be imported into Python using the following command
 
   **Examples**
   
-  An example sniipet for calling the solve function is as follows:
+  An example snippet for calling the solve function is as follows:
   
         >>> import numpy as np
         >>> import pysolv
