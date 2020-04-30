@@ -22,5 +22,5 @@ b = np.array(b)
 x, *_ = pysolv.solve(A, b, 'SOR')
 print(x)
 
-x, *_ = pysolv.solve(A, b, 'SSOR', omega=1.3, verbose=True)
+x, *_ = pysolv.solve(A, b, 'SSOR', omega=1.3)
 print(x)

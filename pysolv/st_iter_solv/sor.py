@@ -47,15 +47,15 @@ class SORSolve(Data):
         Data.__init__(self)
 
         # initialize solution vector
-        self.init_x0()
+        self._init_x0()
 
         # check for relaxation parameter
-        self.check_omega()
+        self._check_omega()
 
         # call the gauss seidel solver
-        self.solve()
+        self._solve()
 
-    def init_x0(self):
+    def _init_x0(self):
         """Check if an initial value exists for the solution vector or initialize the solution vector
         """
 
@@ -68,7 +68,7 @@ class SORSolve(Data):
         self.x = np.empty(self.n)   # solution vector at the i'th iteration
         self.x_old = self.x0  # solution vector at the i-1'th iteration
 
-    def check_omega(self):
+    def _check_omega(self):
         """Check if the user has prescribed a value for the relaxation parameter. If not, prescribe a value of 1.7 based
            on Dr. Rosics's lecture (Institute of Scientific Computing, TU Braunschweig):
            [https://www.tu-braunschweig.de/en/wire/teaching/previous-terms/winter-2016-17]
@@ -79,7 +79,7 @@ class SORSolve(Data):
         except AttributeError:
             self.omega = 1.7
 
-    def solve(self):
+    def _solve(self):
         """Serial python implementation of successive over-relaxation solver based on Dr. Rosic's lectures (Institute of
            Scientific Computing, TU Braunschweig):
            [https://www.tu-braunschweig.de/en/wire/teaching/previous-terms/winter-2016-17]
