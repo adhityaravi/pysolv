@@ -44,8 +44,8 @@ def solve(A, b, solver='jacobi', **kwargs):
     # fetch the solution from the Data class
     x = Data.x
     time_taken = Data.time_taken
-    res = Data.residual
     it = Data.iterations
+    res = Data.residual
 
     # flush the Data class clean
     Data._Data__reset_data()

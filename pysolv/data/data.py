@@ -15,9 +15,23 @@ class Data:
     # available solvers in pysolv
     SOLVERS = ['jacobi', 'gaussseidel', 'sor', 'ssor']
 
+    # option to adapt omega based on the linear system
+    ADAPTIVE_OMEGA = None
+
+    # available techniques to adapt relaxation parameter (significant only for SOR)
+    ADAPTIVE_OMEGA_FLAVOR = ['steepestdescent', 'wolfe', 'armijo']
+
+    # parameters for Wolfe and Armijo condition for relaxation parameter update. These values are chosen based on paper
+    # from Miyatake et al. (can be over-ridden by user)
+    c1 = 0.89
+    c2 = 0.95
+    lambda1 = 1.15
+    lambda2 = 1.4
+    rho1 = 0.85
+
     # general solver settings (can be over-ridden by user)
-    ITERMAX = 3000
-    TOL = 1e-6
+    ITERMAX = 300
+    TOL = 1e-2
 
     # attributes acquired from other classes by the Data class. Declared as private and for internal use only by the
     # Data class
@@ -38,8 +52,11 @@ class Data:
             data (dtype): data to be stored
         """
 
-        setattr(Data, name, data)
-        Data.__acquired_attrs.append(name)
+        if name in ['SOLVERS', 'ADAPTIVE_OMEGA', 'ADAPTIVE_OMEGA_FLAVOR']:
+            pass
+        else:
+            setattr(Data, name, data)
+            Data.__acquired_attrs.append(name)
 
     def _get_attr(self):
         """Pass the __dict__ of the Data class to any child class of Data class

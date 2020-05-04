@@ -15,3 +15,6 @@ __pycache__/
 
 # ignore the benchmarking data generated for pysolv optimization
 pysolv_benchmarks/
+
+# ignore any matrix market files used for testing purposes
+*.mtx
