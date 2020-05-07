@@ -18,3 +18,9 @@ pysolv_benchmarks/
 
 # ignore any matrix market files used for testing purposes
 *.mtx
+
+# ignore make files used for personal build
+make*
+
+# ignore any fortran binaries built in the local machine
+*.so

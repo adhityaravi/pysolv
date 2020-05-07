@@ -6,8 +6,8 @@ solve() uses various stationary iterative and Krylov subspace based schemes for 
 """
 
 # import the necessary packages
-from data import *
-from tools import *
+from pysolv.data import *
+from pysolv.tools import *
 
 
 def solve(A, b, solver='jacobi', **kwargs):
@@ -43,12 +43,9 @@ def solve(A, b, solver='jacobi', **kwargs):
 
     # fetch the solution from the Data class
     x = Data.x
-    time_taken = Data.time_taken
-    it = Data.iterations
-    res = Data.residual
 
     # flush the Data class clean
     Data._Data__reset_data()
 
     # return the solution
-    return x, res, it, time_taken
+    return x

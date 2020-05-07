@@ -15,11 +15,8 @@ class Data:
     # available solvers in pysolv
     SOLVERS = ['jacobi', 'gaussseidel', 'sor', 'ssor']
 
-    # option to adapt omega based on the linear system
-    ADAPTIVE_OMEGA = None
-
     # available techniques to adapt relaxation parameter (significant only for SOR)
-    ADAPTIVE_OMEGA_FLAVOR = ['steepestdescent', 'wolfe', 'armijo']
+    ADAPTIVE_OMEGA_FLAVOR = {'steepestdescent': 1, 'armijo': 2, 'wolfe': 3}
 
     # parameters for Wolfe and Armijo condition for relaxation parameter update. These values are chosen based on paper
     # from Miyatake et al. (can be over-ridden by user)
@@ -30,8 +27,8 @@ class Data:
     rho1 = 0.85
 
     # general solver settings (can be over-ridden by user)
-    ITERMAX = 300
-    TOL = 1e-2
+    itermax = 3000
+    tol = 1e-6
 
     # attributes acquired from other classes by the Data class. Declared as private and for internal use only by the
     # Data class
@@ -71,7 +68,7 @@ class Data:
     @staticmethod
     def __reset_data():
         """Flush all the attributes from the Data class. This method is intended to be a private static method. Call
-           to this function from outside classes is not recommended.
+           to this function from outside this class is not recommended.
         """
 
         for attr in Data.__acquired_attrs:

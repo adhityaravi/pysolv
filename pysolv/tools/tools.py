@@ -4,7 +4,7 @@ A set of tool functions to assist the various function/classes of the pysolv pac
 """
 
 # import the necessary packages
-from data import Data
+from pysolv.data import Data
 import re
 from krylov_solv import *
 from st_iter_solv import *

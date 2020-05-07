@@ -32,7 +32,7 @@ Properties:
 """
 
 # import the necessary packages
-from data import *
+from pysolv.data import *
 import numpy as np
 import time as ti
 

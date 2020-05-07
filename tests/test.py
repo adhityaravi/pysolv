@@ -15,11 +15,18 @@ import scipy.io as io
 # b = [6, 7, 15]
 # b = np.array(b)
 
-A = io.mmread('nos6.mtx')
+A = io.mmread('bcsstk05.mtx')
 A = A.toarray()
 
 n, *_ = A.shape
 b = np.ones(n)
+
+x0 = np.ones(n)
+
+st = ti.time()
+x = pysolv.solve(A, b, 'sor', omega='wolfe', itermax=6000)
+print(ti.time()-st)
+print(A.dot(x))
 
 # x, *_ = pysolv.solve(A, b, 'Jacobi')
 # print(x)
@@ -33,8 +40,11 @@ b = np.ones(n)
 # x, res, it, time = pysolv.solve(A, b, 'SOR', omega='Wolfe')
 # print(res, it, time)
 
-x2, res, it, time = pysolv.solve(A, b, 'SOR', omega='experimental', omega_update_frequency=20)
-print(it)
+# x2, res, it, time = pysolv.solve(A, b, 'SOR', omega=1.85, ITERMAX=504)
+# print(it, time)
+# print(A.dot(x2))
+#print(it, time)
+#print(A.dot(x2))
 
 # print(np.allclose(x1, x2, 1e-2, 1e-2))
 #x = np.linalg.solve(A, b)

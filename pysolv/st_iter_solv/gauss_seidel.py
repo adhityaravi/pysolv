@@ -34,16 +34,15 @@ Properties:
 """
 
 # import the necessary packages
-from data import *
+from pysolv.data import *
+from pysolv.f_lib import f_sorsolve
 import numpy as np
-import time as ti
 
 
 class GaussSeidelSolve(Data):
 
     def __init__(self):
         """Initialize the class with the necessary inheritance and solve the linear system
-           ToDO: Deprecate Gauss-Seidel _solve() and rather call SOR with omega=1
         """
 
         # data inheritance
@@ -65,13 +64,11 @@ class GaussSeidelSolve(Data):
 
         # initialize the solution vectors
         self.x = np.empty(self.n)   # solution vector at the i'th iteration
-        self.x_old = self.x0  # solution vector at the i-1'th iteration
 
     def _solve(self):
         """Serial python implementation of Gauss Seidel solver."""
 
-        # currently cannot handle non square systems in Gauss-seidel
-        # ToDo: Implement generalized Gauss-seidel for non-square systems based on M.Saha's paper
+        # currently cannot handle non square systems in Gauss-Seidel
         if self.m != self.n:
             msg = 'pysolv does not include a gauss-seidel solver for non-square systems yet'
             raise ValueError(msg)
@@ -79,40 +76,16 @@ class GaussSeidelSolve(Data):
         # Gauss-Seidel iterations
         # x_i(iter) = (1/a_i_i)(b_i - sum_(j=1)^(i-1)(a_i_j * x_j(iter)) - sum_(j=i+1)^(n)(A_i_j * x_j(iter-1)))
         else:
-            # time the solver
-            start_time = ti.time()
-
-            # Initialize the iteration counter and solution vector
-            iter = 0
-
-            # continue the iteration till the iteration counter reaches the maximum count if convergence is not obtained
-            while iter < self.ITERMAX:
-                for i in range(0, self.n):
-                    s1 = 0
-                    s2 = 0
-
-                    for j in range(0, i):
-                        s1 = s1 + (self.A[i, j]*self.x[j])
-
-                    for j in range(i+1, self.n):
-                        s2 = s2 + (self.A[i, j]*self.x_old[j])
-
-                    self.x[i] = (1/self.A[i, i])*(self.b[i] - s1 - s2)
-
-                # stopping criteria: (||x(iter) - x(iter-1)|| / ||x(iter)||) < TOL
-                # ToDo: Implement a pysolv native function to compute the residual
-                res = np.linalg.norm((self.x - self.x_old)) / np.linalg.norm(self.x_old)
-                if res < self.TOL:
-                    break
-                # Update the iteration counter and x(iter-1)
-                self.x_old = self.x.copy()
-                iter += 1
-
-            # time taken for convergence
-            time_taken = ti.time() - start_time
+            # set relaxation parameter = 1
+            omega = 1
+            # dummy parameters
+            h = 2
+            adaptive_omega = 0
+            omega_update_frequency = 1
+            # call the sor fortran wrapper with relaxation parameter = 1
+            f_sorsolve.init(self.A, self.b, self.x0, self.itermax, self.tol, omega, h, adaptive_omega,
+                            omega_update_frequency, self.c1, self.c2, self.lambda1, self.lambda2, self.rho1)
+            f_sorsolve.solve(self.x)
 
             # add the solution to the Data class
             Data.add_data('x', self.x)
-            Data.add_data('time_taken', time_taken)
-            Data.add_data('iterations', iter - 1)
-            Data.add_data('residual', res)
