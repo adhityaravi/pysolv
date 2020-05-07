@@ -22,5 +22,8 @@ pysolv_benchmarks/
 # ignore make files used for personal build
 make*
 
+# ignore local machine build
+build/
+
 # ignore any fortran binaries built in the local machine
 *.so
