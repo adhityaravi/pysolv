@@ -90,5 +90,8 @@ def call_solver():
     elif Data.solver == 'ssor':
         SSORSolve()
 
+    elif Data.solver == 'cg':
+        CGSolve()
+
     else:
         print('wubba lubba dub dub')
