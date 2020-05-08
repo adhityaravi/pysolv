@@ -4,4 +4,3 @@
 from .gauss_seidel import GaussSeidelSolve
 from .jacobi import JacobiSolve
 from .sor import SORSolve
-from .ssor import SSORSolve

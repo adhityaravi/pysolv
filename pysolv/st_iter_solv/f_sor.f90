@@ -31,7 +31,7 @@ module f_sorsolve
             ! local
             integer :: n_in
 
-            ! f2py intent(hide), depend(a) :: n_in=shape(A_in, 0)
+            ! f2py intent(hide), depend(A_in) :: n_in=shape(A_in, 0)
 
             ! copy local inputs into corresponding the module variables
             ! ints and floats

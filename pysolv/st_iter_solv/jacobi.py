@@ -33,6 +33,7 @@ Properties:
 
 # import the necessary packages
 from pysolv.data import *
+from pysolv.f_lib import f_jacobisolve
 import numpy as np
 import time as ti
 
@@ -66,7 +67,6 @@ class JacobiSolve(Data):
 
         # initialize the solution vectors
         self.x = np.empty(self.n)  # solution at the i'th iteration
-        self.x_old = self.x0  # duplication to store the solution from i-1 iteration
 
     def _check_omega(self):
         """Check if the user has prescribed a value for the relaxation parameter. If not, prescribe a value of 1 (Jacobi
@@ -91,43 +91,8 @@ class JacobiSolve(Data):
         # Jacobi iteration:
         # x_i(iter) = (1/a_i_i)(b_i - sum(a_i_j * x_j(iter-1))) where, i = 1 to n, j = 1 to n & j != i
         else:
-            # time the solver
-            start_time = ti.time()
-
-            # initialize iteration counter
-            iter = 0
-
-            # continue the iteration till the iteration counter reaches the maximum count if convergence is not
-            # obtained
-            while iter < self.ITERMAX:
-                for i in range(0, self.n):
-                    # (b_i - sum(a_i_j * x_j(k)))
-                    sum_ = 0
-
-                    for j in range(0, self.n):
-                        if j != i:
-                            sum_ = sum_ + (self.A[i, j] * self.x_old[j])
-                        else:
-                            continue
-
-                    sum_ = self.b[i] - sum_
-                    # x_i(k) = (1/a_i_i) * sum
-                    self.x[i] = self.omega * (1/self.A[i, i]) * sum_
-
-                # stopping criteria: (||x(iter) - x(iter-1)|| / ||x(iter)||) < TOL
-                res = np.linalg.norm(np.divide((self.x - self.x_old), self.x_old))
-                if res < self.TOL:
-                    break
-
-                # update the iteration counter and x(iter -1)
-                self.x_old = self.x.copy()
-                iter += 1
-
-            # time taken for convergence
-            time_taken = ti.time() - start_time
+            # call the fortran jacobi solver
+            f_jacobisolve.solve(self.A, self.b, self.x0, self.x, self.itermax, self.tol, self.omega)
 
             # add the solution to the Data class
             Data.add_data('x', self.x)
-            Data.add_data('time_taken', time_taken)
-            Data.add_data('iterations', iter - 1)
-            Data.add_data('residual', res)

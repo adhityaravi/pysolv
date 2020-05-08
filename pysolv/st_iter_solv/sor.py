@@ -121,7 +121,7 @@ class SORSolve(Data):
             self.omega_update_frequency = 20
 
     def _solve(self):
-        """Serial python implementation of successive over-relaxation solver based on Dr. Rosic's lectures (Institute of
+        """Serial implementation of successive over-relaxation solver based on Dr. Rosic's lectures (Institute of
            Scientific Computing, TU Braunschweig):
            [https://www.tu-braunschweig.de/en/wire/teaching/previous-terms/winter-2016-17]
         """

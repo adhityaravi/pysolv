@@ -6,7 +6,7 @@ import pysolv
 import numpy as np
 import time as ti
 import scipy.io as io
-from pysolv.f_lib import f_sorsolve
+from pysolv.f_lib import f_jacobisolve
 
 #print(pysolv.__version__)
 
@@ -16,15 +16,20 @@ from pysolv.f_lib import f_sorsolve
 # n, *_ = A.shape
 # b = np.ones(n)
 #
-# A = [[1, 0, 1], [0, -3, 1], [2, 1, 3]]
-# A = np.array(A)
-#
-# b = [6, 7, 15]
-# b = np.array(b)
-#
-# x0 = np.ones(3)
-#
-# f_sorsolve.init(A, b, x0, 3000, 1e-6, 1, 2, 0, 20, 1, 1, 1, 1, 1)
+A = [[1, 0, 1], [0, -3, 1], [2, 1, 3]]
+A = np.array(A)
+
+b = [6, 7, 15]
+b = np.array(b)
+
+x0 = np.ones(3)
+x = np.empty(3)
+
+#f_jacobisolve.solve(A, b, x0, x, 1000, 1e-6, 1)
+x = pysolv.solve(A, b)
+print(b)
+print(A.dot(x))
+
 #
 # x = np.empty(3)
 #
@@ -34,18 +39,18 @@ from pysolv.f_lib import f_sorsolve
 # print(A.dot(x))
 # print(f_sorsolve.res_)
 
-A = io.mmread('bcsstk04.mtx')
-A = A.toarray()
-
-n, *_ = A.shape
-b = np.ones(n)
-
-x0 = np.ones(n)
-
-st = ti.time()
-x = pysolv.solve(A, b, 'jacobi', ITERMAX=3000, TOL=1e-6)
-print(ti.time()-st)
-print(A.dot(x))
+# A = io.mmread('bcsstk04.mtx')
+# A = A.toarray()
+#
+# n, *_ = A.shape
+# b = np.ones(n)
+#
+# x0 = np.ones(n)
+#
+# st = ti.time()
+# x = pysolv.solve(A, b, 'jacobi', ITERMAX=3000, TOL=1e-6)
+# print(ti.time()-st)
+# print(A.dot(x))
 
 # x, *_ = pysolv.solve(A, b, 'Jacobi')
 # print(x)
