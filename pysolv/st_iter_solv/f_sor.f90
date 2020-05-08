@@ -9,8 +9,8 @@ module f_sorsolve
     ! variables declared for host association with the contained subroutines
     double precision, allocatable, dimension(:, :) :: A
     double precision, allocatable, dimension(:) :: b, x0
-    double precision :: tol, omega, h, c1, c2, lambda1, lambda2, rho1
-    integer :: itermax, adaptive_omega, omega_update_frequency, n
+    double precision :: tol, omega, h, c1, c2, lambda1, lambda2, rho1, res_
+    integer :: itermax, adaptive_omega, omega_update_frequency, n, iter_
 
     contains
         !~~~~~~~~~~~~~~~~~!
@@ -81,8 +81,6 @@ module f_sorsolve
             integer :: iter, i, j
             double precision, dimension(n) :: Ax, x_old, res, res_old
 
-            ! f2py intent(hide), depend(a) :: n=shape(A, 0)
-
             ! Initilializing local variables
             Ax = 0
             x_old = x0
@@ -133,7 +131,101 @@ module f_sorsolve
                 iter = iter + 1
             end do
 
+            iter_ = iter
+            res_ = norm2(res)
+
         end subroutine solve
+
+        !~~~~~~~~~~~~~~~~~~~!
+        ! SUBROUTINE s_solve !
+        !~~~~~~~~~~~~~~~~~~~!
+        subroutine s_solve(x)
+        ! subroutine to perform symmetric sor iteration
+
+            implicit none
+
+            ! outputs
+            double precision, intent(inout), dimension(:) :: x
+
+            ! local
+            double precision :: sum_
+            integer :: iter, i, j
+            double precision, dimension(n) :: Ax, x_old, res, res_old, x_half
+
+            ! Initilializing local variables
+            Ax = 0
+            x_old = x0
+            iter = 0
+            res = 0
+            res_old = 0
+            x_half = 0
+
+            ! continue the iteration till the iteration counter reaches the maximum count if convergence is not
+            ! obtained
+            do while (iter <= itermax)
+                ! Forward sweep
+                do i = 1, n
+                    sum_ = 0
+
+                    ! sum_(j=1) ^ (i - 1)(a_i_j * x_j(iter))
+                    do j = 1, i-1
+                        sum_ = sum_ + (A(i, j)*x_half(j))
+                    end do
+
+                    ! sum_(j=i + 1) ^ (n)(A_i_j * x_j(iter - 1))
+                    do j = i+1, n
+                        sum_ = sum_ + (A(i, j)*x_old(j))
+                    end do
+
+                    ! x_i(half) = (1-omega) * x_i(iter-1) + ((omega/a_i_i) * (b_i - sum_)
+                    x_half(i) = ((1-omega)*x_old(i)) + ((omega / A(i, i)) * (b(i) - sum_))
+                end do
+
+                ! Backward sweep
+                do i = n, 1, -1
+                    sum_ = 0
+
+                    ! sum_(j=1) ^ (i - 1)(a_i_j * x_j(iter))
+                    do j = 1, i-1
+                        sum_ = sum_ + (A(i, j)*x_half(j))
+                    end do
+
+                    ! sum_(j=i + 1) ^ (n)(A_i_j * x_j(iter - 1))
+                    do j = i+1, n
+                        sum_ = sum_ + (A(i, j)*x(j))
+                    end do
+
+                    ! x_i(iter) = (1-omega) * x_i(half) + ((omega/a_i_i) * (b_i - sum_)
+                    x(i) = ((1-omega)*x_half(i)) + ((omega / A(i, i)) * (b(i) - sum_))
+                end do
+
+                ! stopping criteria: ||b - A.x|| < TOL
+                call mat_vec_mul(A, x, Ax, n)
+                res = b - Ax
+                if (norm2(res) <= tol) then
+                    exit
+                end if
+
+                ! update relaxation parameter
+                if ((mod(iter, omega_update_frequency) == 0) .and. (.not. iter == 0)) then
+                    if (.not. adaptive_omega == 0) then
+                        call update_omega(x, x_old, res, res_old)
+                    end if
+                end if
+
+                ! update residual for the next iteration
+                res_old = res
+                Ax = 0
+
+                ! update the iteration counter and x(iter-1)
+                x_old = x
+                iter = iter + 1
+            end do
+
+            iter_ = iter
+            res_ = norm2(res)
+
+        end subroutine s_solve
 
         !~~~~~~~~~~~~~~~~~~~~~~~~~!
         ! SUBROUTINE update_omega !

@@ -29,6 +29,21 @@ Properties:
         eigen values of A are positive)
 
 3. A posteriori convergence criteria for the SOR scheme is: spectral radius of (1 - (1/omega*D + L)*A) is < 1.
+
+This solver also allows the user to use the SOR solver symmetrically --> Symmetric SOR.
+
+SSOR linear solver is a modification of the successive over-relaxation (SOR) scheme. SSOR scheme combines two SOR
+sweeps (a forward sweep and a backward sweep).
+
+The convergence of the SSOR scheme is generally worse than that of the SOR scheme. The iteration matrix (C) in SSOR is
+similar to a symmetric matrix because of the nature of the scheme. Hence, the motivation behind the SSOR scheme is to
+use it as a pre-conditioner for other iterative schemes with symmetric matrices.
+
+For more information on SSOR scheme, check the following literature
+
+[1]. https://www-users.cs.umn.edu/~saad/IterMethBook_2ndEd.pdf
+[2]. https://mathworld.wolfram.com/SymmetricSuccessiveOverrelaxationMethod.html
+[3]. http://netlib.org/linalg/html_templates/node17.html
 """
 
 # import the necessary packages
@@ -40,9 +55,12 @@ import re
 
 class SORSolve(Data):
 
-    def __init__(self):
+    def __init__(self, symmetric_solve=False):
         """Initialize the class with the necessary inheritance and solve the linear system
         """
+
+        # flag to switch between sor and symmetric sor
+        self.symmetric_solve = symmetric_solve
 
         # data inheritance
         Data.__init__(self)
@@ -71,9 +89,8 @@ class SORSolve(Data):
         self.x = np.empty(self.n)   # solution vector at the i'th iteration
 
     def _map_omega(self):
-        """Check if the user has prescribed a value for the relaxation parameter. If not, prescribe a value of 1.7 based
-           on Dr. Rosics's lecture (Institute of Scientific Computing, TU Braunschweig):
-           [https://www.tu-braunschweig.de/en/wire/teaching/previous-terms/winter-2016-17]
+        """Check if the user has prescribed a value for the relaxation parameter. If not, compute omega adaptively based
+           on Armijo conditions (Miyatake et al.)
         """
 
         # check if a relaxation parameter is already prescribed by the user
@@ -94,7 +111,8 @@ class SORSolve(Data):
 
         # default relaxation parameter
         except AttributeError:
-            self.omega = 1.7
+            self.adaptive_omega = 2
+            self.omega = 1
 
         # default number of iterations after which relaxation parameter will be updated
         try:
@@ -120,7 +138,13 @@ class SORSolve(Data):
             # call the sor fortran wrapper
             f_sorsolve.init(self.A, self.b, self.x0, self.itermax, self.tol, self.omega, self.h, self.adaptive_omega,
                             self.omega_update_frequency, self.c1, self.c2, self.lambda1, self.lambda2, self.rho1)
-            f_sorsolve.solve(self.x)
+
+            # SSOR
+            if self.symmetric_solve:
+                f_sorsolve.s_solve(self.x)
+            # SOR
+            else:
+                f_sorsolve.solve(self.x)
 
             # add the computed information to the Data class
             Data.add_data('x', self.x)

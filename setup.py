@@ -32,7 +32,7 @@ setup(
         long_description_content_type="text/markdown",
         url="https://framagit.org/adhityaravi/pysolv",
         packages=setuptools.find_packages(),
-        ext_modules=[f_sor],
+        ext_modules=[f_sor, ],
         classifiers=[
             "Development Status :: 1 - Planning",
             "License :: OSI Approved :: MIT License",

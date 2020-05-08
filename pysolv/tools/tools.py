@@ -88,7 +88,7 @@ def call_solver():
         SORSolve()
 
     elif Data.solver == 'ssor':
-        SSORSolve()
+        SORSolve(symmetric_solve=True)
 
     else:
         print('wubba lubba dub dub')
