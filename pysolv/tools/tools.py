@@ -30,6 +30,20 @@ def check_solver(solver):
         Data.add_data('solver', solver)
 
 
+def check_preconditioner():
+    """Check if the selected solver scheme is available in pysolv
+    """
+
+    # remove unwanted characters from the solver string and make it case insensitive
+    Data.pc = re.sub('\W+', '', Data.pc).casefold()
+
+    # if the requested solver scheme is not available in pysolv, raise an error
+    if Data.pc not in Data.PRECONDITIONERS:
+        msg = 'Requested preconditioner is not available in pysolv. Please select from the available schemes: {}'\
+              .format(Data.SOLVERS)
+        raise ValueError(msg)
+
+
 def add_kwargs(kwargs):
     """Add the keyword arguments, passed to the solve function, to the Data class
     """

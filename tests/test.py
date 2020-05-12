@@ -14,6 +14,12 @@ import time as ti
 #
 # b = [6, 7, 15]
 # b = np.array(b)
+#
+# A = [[0.93355, 0.35572, 0.36875], [0.35572, 0.18057, 0.73134], [0.36875, 0.73134, 0.05757]]
+# A = np.array(A)
+#
+# b = [1, 1, 1]
+# b = np.array(b)
 
 A = io.mmread('bcsstk04.mtx')
 A = A.toarray()
@@ -37,7 +43,7 @@ b = np.ones(n)
 # print('SSOR')
 # print(x)
 
-x = pysolv.solve(A, b, 'CG')
-print('cg')
+x = pysolv.solve(A, b, 'CG', pc = 'jacobi')
+# print('cg')
 # print(x)
 

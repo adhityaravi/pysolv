@@ -14,6 +14,7 @@ class Data:
 
     # available solvers in pysolv
     SOLVERS = ['jacobi', 'gaussseidel', 'sor', 'ssor', 'cg']
+    PRECONDITIONERS = ['jacobi', 'gaussseidel', 'sor', 'ssor', 'none']
 
     # general solver settings (can be over-ridden by user)
     ITERMAX = 3000
