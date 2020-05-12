@@ -19,9 +19,6 @@ pysolv_benchmarks/
 # ignore any matrix market files used for testing purposes
 *.mtx
 
-# ignore make files used for personal build
-make*
-
 # ignore local machine build
 build/
 
