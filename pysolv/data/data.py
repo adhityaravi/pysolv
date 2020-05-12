@@ -13,7 +13,8 @@ sparse scipy arrays and for handling huge pytables.
 class Data:
 
     # available solvers in pysolv
-    SOLVERS = ['jacobi', 'gaussseidel', 'sor', 'ssor']
+    SOLVERS = ['jacobi', 'gaussseidel', 'sor', 'ssor', 'cg']
+    PRECONDITIONERS = ['jacobi', 'gaussseidel', 'sor', 'ssor', 'none']
 
     # available techniques to adapt relaxation parameter (significant only for SOR)
     ADAPTIVE_OMEGA_FLAVOR = {'steepestdescent': 1, 'armijo': 2, 'wolfe': 3}
