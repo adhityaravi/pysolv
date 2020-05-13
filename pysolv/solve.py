@@ -6,7 +6,7 @@ solve() uses various stationary iterative and Krylov subspace based schemes for 
 """
 
 # import the necessary packages
-from pysolv.data import *
+from pysolv.data import Data
 from pysolv.tools import *
 
 
@@ -34,9 +34,6 @@ def solve(A, b, solver='jacobi', **kwargs):
 
     # add the rest of the keyword arguments, if any, to the Data class
     add_kwargs(kwargs)
-
-    # check if the preconditioner is available in pysolv
-    check_preconditioner()
 
     # extract different properties of the linear system and store it in the Data class
     ext_lsprops()

@@ -5,7 +5,7 @@ import setuptools
 from numpy.distutils.core import Extension
 from numpy.distutils.core import setup
 
-# Fortran extensions
+# Extension libraries
 f_sor = Extension(
                     name='pysolv.f_lib.f_sor',
                     sources=['pysolv/st_iter_solv/f_sor.f90',
@@ -16,13 +16,22 @@ f_sor = Extension(
                  )
 
 f_jacobi = Extension(
-                    name='pysolv.f_lib.f_jacobi',
-                    sources=['pysolv/st_iter_solv/f_jacobi.f90',
+                        name='pysolv.f_lib.f_jacobi',
+                        sources=['pysolv/st_iter_solv/f_jacobi.f90',
+                                 'pysolv/tools/f_tools.f90'],
+                        extra_f90_compile_args=['-fcheck=all', '-O3'],
+                        library_dirs=['/usr/lib'],
+                        libraries=['lapack', 'blas']
+                    )
+
+f_cg = Extension(
+                    name='pysolv.f_lib.f_cg',
+                    sources=['pysolv/krylov_solv/f_cg.f90',
                              'pysolv/tools/f_tools.f90'],
                     extra_f90_compile_args=['-fcheck=all', '-O3'],
                     library_dirs=['/usr/lib'],
                     libraries=['lapack', 'blas']
-                 )
+                )
 
 
 # Setup
@@ -41,7 +50,7 @@ setup(
         long_description_content_type="text/markdown",
         url="https://framagit.org/adhityaravi/pysolv",
         packages=setuptools.find_packages(),
-        ext_modules=[f_sor, f_jacobi, ],
+        ext_modules=[f_sor, f_jacobi, f_cg, ],
         classifiers=[
             "Development Status :: 1 - Planning",
             "License :: OSI Approved :: MIT License",

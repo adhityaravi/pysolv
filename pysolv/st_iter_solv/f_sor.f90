@@ -18,7 +18,7 @@ module f_sorsolve
         !~~~~~~~~~~~~~~~~~!
         subroutine init(A_in, b_in, x0_in, itermax_in, tol_in, omega_in, h_in, adaptive_omega_in, &
                         omega_update_frequency_in, c1_in, c2_in, lambda1_in, lambda2_in, rho1_in, n_in)
-        !subroutine for initiating py2f inputs that will be shared by other subroutines in the module
+        ! subroutine for initiating py2f inputs that will be shared by other subroutines in the module
 
             implicit none
 

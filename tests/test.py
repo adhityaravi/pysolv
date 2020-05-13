@@ -7,7 +7,7 @@ import numpy as np
 import scipy.io as io
 import time as ti
 import scipy.io as io
-from pysolv.f_lib import f_jacobisolve
+from pysolv.f_lib import f_cgsolve
 
 #print(pysolv.__version__)
 
@@ -23,11 +23,13 @@ from pysolv.f_lib import f_jacobisolve
 # b = [1, 1, 1]
 # b = np.array(b)
 
-A = io.mmread('bcsstk04.mtx')
+A = io.mmread('bcsstk07.mtx')
 A = A.toarray()
 
 n, *_ = A.shape
 b = np.ones(n)
+
+print(n)
 
 # x = pysolv.solve(A, b, 'Jacobi')
 # print('Jacobi')
@@ -44,8 +46,22 @@ b = np.ones(n)
 # x = pysolv.solve(A, b, 'SSOR')
 # print('SSOR')
 # print(x)
+st = ti.time()
+x = pysolv.solve(A, b, 'CG')
+print('Done in {} s'.format(ti.time() - st))
 
-x = pysolv.solve(A, b, 'CG', pc='jacobi')
+x = np.ones(n)
+
+st = ti.time()
+f_cgsolve.init(A, b, 1e-6, 3000)
+f_cgsolve.solve(x)
+print('Done in {} s'.format(ti.time() - st))
+
+# st = ti.time()
+# x = pysolv.solve(A, b, 'SOR')
+# print('Done in {} s'.format(ti.time() - st))
+#
+# print(A.dot(x))
 # print('cg')
 # print(x)
 

@@ -4,12 +4,12 @@ A set of tool functions to assist the various function/classes of the pysolv pac
 """
 
 # import the necessary packages
-from pysolv.data import Data
 import re
-from krylov_solv import *
-from st_iter_solv import *
-from exceptions import *
+from pysolv.krylov_solv import *
+from pysolv.st_iter_solv import *
+from pysolv.exceptions import *
 import numpy as np
+from pysolv.data import Data
 
 
 def check_solver(solver):
@@ -28,20 +28,6 @@ def check_solver(solver):
     # else, add it to the Data class
     else:
         Data.add_data('solver', solver)
-
-
-def check_preconditioner():
-    """Check if the selected solver scheme is available in pysolv
-    """
-
-    # remove unwanted characters from the solver string and make it case insensitive
-    Data.pc = re.sub('\W+', '', Data.pc).casefold()
-
-    # if the requested solver scheme is not available in pysolv, raise an error
-    if Data.pc not in Data.PRECONDITIONERS:
-        msg = 'Requested preconditioner is not available in pysolv. Please select from the available schemes: {}'\
-              .format(Data.SOLVERS)
-        raise ValueError(msg)
 
 
 def add_kwargs(kwargs):
