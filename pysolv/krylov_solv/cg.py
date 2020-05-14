@@ -2,7 +2,6 @@
 """
 
 # import the necessary packages
-from pysolv import solve
 from pysolv.data import Data
 from pysolv.f_lib import f_cgsolve
 import numpy as np
@@ -56,18 +55,17 @@ class CGSolve(Data):
             self.x = self.x + (alpha * dir)
 
             # update the residual
-            res_nxt = res - (alpha * Add)
+            res = res - (alpha * Add)
             # check for convergence
-            if np.linalg.norm(res_nxt) < self.tol:
+            if np.linalg.norm(res) < self.tol:
                 break
 
             # compute beta coefficient (from Gram-Schmidt orthogonalization)
             # beta = res_nxt.res_nxt / res.res
-            beta = (res_nxt.dot(res_nxt)) / rdr
+            beta = (res.dot(res)) / rdr
 
             # update the search direction
-            dir = res_nxt + (beta * dir)
-            res = res_nxt.copy()
+            dir = res + (beta * dir)
 
             # update iteration counter
             iter += 1

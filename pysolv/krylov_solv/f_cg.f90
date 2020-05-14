@@ -64,13 +64,12 @@ module f_cgsolve
             double precision, intent(inout), dimension(:) :: x
 
             ! local
-            double precision, dimension(n) :: res, res_nxt, dir, Adx, Add
+            double precision, dimension(n) :: res, dir, Adx, Add
             double precision :: alpha, beta, rdr, ddAdd, rndrn
             integer :: iter
 
             ! initializing local variables
             iter = 0
-            res_nxt = 0
             Adx = 0
             Add = 0
             ddAdd = 0
@@ -101,21 +100,20 @@ module f_cgsolve
                x = x + (alpha*dir)
 
                ! update the residual
-               res_nxt = res - (alpha*Add)
+               res = res - (alpha*Add)
                ! check for convergence
-               if (norm2(res_nxt) <= tol) then
+               if (norm2(res) <= tol) then
                    exit
                end if
 
                ! compute beta coefficient (from Gram-Schmidt orthogonalization)
                ! res_nxt.res_nxt
-               call vec_vec_mul(res_nxt, res_nxt, rndrn, n)
+               call vec_vec_mul(res, res, rndrn, n)
                ! beta = (res_nxt.res_nxt) / (res.res)
                beta = rndrn / rdr
 
                ! update the search direction
-               dir = res_nxt + (beta*dir)
-               res = res_nxt
+               dir = res + (beta*dir)
 
                ! update the iteration counter
                iter = iter + 1

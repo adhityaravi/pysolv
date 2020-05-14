@@ -7,6 +7,7 @@ A set of tool functions to assist the various function/classes of the pysolv pac
 import re
 from pysolv.krylov_solv import *
 from pysolv.st_iter_solv import *
+from pysolv.oneD_proj_solv import *
 from pysolv.exceptions import *
 import numpy as np
 from pysolv.data import Data
@@ -92,6 +93,9 @@ def call_solver():
 
     elif Data.solver == 'cg':
         CGSolve()
+
+    elif Data.solver == 'sd':
+        SDSolve()
 
     else:
         print('wubba lubba dub dub')

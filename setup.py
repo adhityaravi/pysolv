@@ -33,6 +33,15 @@ f_cg = Extension(
                     libraries=['lapack', 'blas']
                 )
 
+f_sd = Extension(
+                    name='pysolv.f_lib.f_sd',
+                    sources=['pysolv/oneD_proj_solv/f_sd.f90',
+                             'pysolv/tools/f_tools.f90'],
+                    extra_f90_compile_args=['-fcheck=all', '-O3'],
+                    library_dirs=['/usr/lib'],
+                    libraries=['lapack', 'blas']
+                )
+
 
 # Setup
 with open("README.md", "r") as fh:
@@ -50,7 +59,7 @@ setup(
         long_description_content_type="text/markdown",
         url="https://framagit.org/adhityaravi/pysolv",
         packages=setuptools.find_packages(),
-        ext_modules=[f_sor, f_jacobi, f_cg, ],
+        ext_modules=[f_sor, f_jacobi, f_cg, f_sd, ],
         classifiers=[
             "Development Status :: 1 - Planning",
             "License :: OSI Approved :: MIT License",

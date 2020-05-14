@@ -7,7 +7,7 @@ import numpy as np
 import scipy.io as io
 import time as ti
 import scipy.io as io
-from pysolv.f_lib import f_cgsolve
+from pysolv.f_lib import f_sdsolve
 
 #print(pysolv.__version__)
 
@@ -29,19 +29,19 @@ A = A.toarray()
 n, *_ = A.shape
 b = np.ones(n)
 
-print(n)
+#print(n)
 
-st = ti.time()
-D = np.diag(np.diag(A))
-L = np.tril(A, -1)
-
-M = L + D
-
-st = ti.time()
-x = pysolv.solve(M, b, 'Gaussseidel')
-print(M.dot(x))
-print('Done in {} s'.format(ti.time()-st))
-exit()
+# st = ti.time()
+# D = np.diag(np.diag(A))
+# L = np.tril(A, -1)
+#
+# M = L + D
+#
+# st = ti.time()
+# x = pysolv.solve(M, b, 'Gaussseidel')
+# print(M.dot(x))
+# print('Done in {} s'.format(ti.time()-st))
+# exit()
 
 # x = pysolv.solve(A, b, 'Jacobi')
 # print('Jacobi')
@@ -58,16 +58,23 @@ exit()
 # x = pysolv.solve(A, b, 'SSOR')
 # print('SSOR')
 # print(x)
+# st = ti.time()
+# x = pysolv.solve(A, b, 'CG')
+# print('Done in {} s'.format(ti.time() - st))
+#
+# st = ti.time()
+# x = pysolv.solve(A, b, 'SOR', itermax=6000)
+# print('Done in {} s'.format(ti.time() - st))
+
 st = ti.time()
-x = pysolv.solve(A, b, 'CG')
+x = pysolv.solve(A, b, 'SD', itermax=100000)
 print('Done in {} s'.format(ti.time() - st))
 
-x = np.ones(n)
-
 st = ti.time()
-f_cgsolve.init(A, b, 1e-6, 3000)
-f_cgsolve.solve(x)
+x = pysolv.solve(A, b, 'GaussSeidel', itermax=100000)
 print('Done in {} s'.format(ti.time() - st))
+
+
 
 # st = ti.time()
 # x = pysolv.solve(A, b, 'SOR')
