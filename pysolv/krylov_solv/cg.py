@@ -1,8 +1,8 @@
 """Conjugate Gradient linear solver.
-
 """
 
 # import the necessary packages
+from pysolv import solve
 from pysolv.data import Data
 from pysolv.f_lib import f_cgsolve
 import numpy as np

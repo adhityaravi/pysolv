@@ -23,13 +23,25 @@ from pysolv.f_lib import f_cgsolve
 # b = [1, 1, 1]
 # b = np.array(b)
 
-A = io.mmread('bcsstk07.mtx')
+A = io.mmread('bcsstk05.mtx')
 A = A.toarray()
 
 n, *_ = A.shape
 b = np.ones(n)
 
 print(n)
+
+st = ti.time()
+D = np.diag(np.diag(A))
+L = np.tril(A, -1)
+
+M = L + D
+
+st = ti.time()
+x = pysolv.solve(M, b, 'Gaussseidel')
+print(M.dot(x))
+print('Done in {} s'.format(ti.time()-st))
+exit()
 
 # x = pysolv.solve(A, b, 'Jacobi')
 # print('Jacobi')

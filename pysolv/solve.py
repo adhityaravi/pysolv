@@ -10,19 +10,18 @@ from pysolv.data import Data
 from pysolv.tools import *
 
 
-def solve(A, b, solver='jacobi', **kwargs):
+def solve(A, b, solver='CG', **kwargs):
     """Solve a linear system of equations
 
     Parameters:
+    ----------
          A (numpy array): coefficient matrix
          b (numpy array): RHS vector
-         solver (string): Type of the scheme to be used to solve the equation, by default uses Jacobi
+         solver (string): Type of the scheme to be used to solve the equation, by default uses CG
 
     Returns:
+    -------
         x (numpy array): solution to the linear system
-        res (float): residual with which the linear solver converged
-        it (int): number of iterations at which the linear solver converged
-        time_taken (float): time taken by the linear solver to converge in [s]
     """
 
     # add the coefficient matrix, RHS vector to the Data class
