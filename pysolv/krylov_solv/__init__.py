@@ -5,4 +5,3 @@
 from .bicg import *
 from .cg import *
 from .gmres import *
-from .minres import *

@@ -9,8 +9,8 @@ from pysolv.krylov_solv import *
 from pysolv.st_iter_solv import *
 from pysolv.oneD_proj_solv import *
 from pysolv.exceptions import *
-import numpy as np
 from pysolv.data import Data
+import numpy as np
 
 
 def check_solver(solver):
@@ -96,6 +96,9 @@ def call_solver():
 
     elif Data.solver == 'sd':
         SDSolve()
+
+    elif Data.solver == 'minres':
+        MinResSolve()
 
     else:
         print('wubba lubba dub dub')

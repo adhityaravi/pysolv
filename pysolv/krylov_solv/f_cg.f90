@@ -128,7 +128,7 @@ module f_cgsolve
             end do
 
             iter_ = iter
-            res_ = norm2(res_nxt)
+            res_ = norm2(res)
 
         end subroutine solve
 

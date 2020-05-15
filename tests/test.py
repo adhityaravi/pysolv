@@ -7,7 +7,7 @@ import numpy as np
 import scipy.io as io
 import time as ti
 import scipy.io as io
-from pysolv.f_lib import f_sdsolve
+from pysolv.f_lib import f_cgsolve
 
 #print(pysolv.__version__)
 
@@ -23,7 +23,7 @@ from pysolv.f_lib import f_sdsolve
 # b = [1, 1, 1]
 # b = np.array(b)
 
-A = io.mmread('bcsstk05.mtx')
+A = io.mmread('nos6.mtx')
 A = A.toarray()
 
 n, *_ = A.shape
@@ -67,12 +67,22 @@ b = np.ones(n)
 # print('Done in {} s'.format(ti.time() - st))
 
 st = ti.time()
-x = pysolv.solve(A, b, 'SD', itermax=100000)
+x = pysolv.solve(A, b, 'CG')
 print('Done in {} s'.format(ti.time() - st))
 
+x = np.ones(n, order='F')
+
+A = np.array(A, order='F')
+b = np.array(b, order='F')
+
 st = ti.time()
-x = pysolv.solve(A, b, 'GaussSeidel', itermax=100000)
+f_cgsolve.init(A, b, 1e-6, 3000)
+f_cgsolve.solve(x)
 print('Done in {} s'.format(ti.time() - st))
+
+# st = ti.time()
+# x = pysolv.solve(A, b, 'GaussSeidel', itermax=100000)
+# print('Done in {} s'.format(ti.time() - st))
 
 
 

@@ -13,7 +13,7 @@ sparse scipy arrays and for handling huge pytables.
 class Data:
 
     # available solvers in pysolv
-    SOLVERS = ['jacobi', 'gaussseidel', 'sor', 'ssor', 'cg', 'sd']
+    SOLVERS = ['jacobi', 'gaussseidel', 'sor', 'ssor', 'cg', 'sd', 'minres']
 
     # available pre-conditioners for CG in pysolv
     #PRECONDITIONER_FLAVOR = ['jacobi', 'gaussseidel', 'sor', 'ssor']

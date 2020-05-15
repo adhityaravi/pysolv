@@ -6,11 +6,13 @@ from numpy.distutils.core import Extension
 from numpy.distutils.core import setup
 
 # Extension libraries
+compile_args = ['-fcheck=all', '-O3']
+
 f_sor = Extension(
                     name='pysolv.f_lib.f_sor',
                     sources=['pysolv/st_iter_solv/f_sor.f90',
                              'pysolv/tools/f_tools.f90'],
-                    extra_f90_compile_args=['-fcheck=all', '-O3'],
+                    extra_f90_compile_args=compile_args,
                     library_dirs=['/usr/lib'],
                     libraries=['lapack', 'blas']
                  )
@@ -19,7 +21,7 @@ f_jacobi = Extension(
                         name='pysolv.f_lib.f_jacobi',
                         sources=['pysolv/st_iter_solv/f_jacobi.f90',
                                  'pysolv/tools/f_tools.f90'],
-                        extra_f90_compile_args=['-fcheck=all', '-O3'],
+                        extra_f90_compile_args=compile_args,
                         library_dirs=['/usr/lib'],
                         libraries=['lapack', 'blas']
                     )
@@ -28,7 +30,7 @@ f_cg = Extension(
                     name='pysolv.f_lib.f_cg',
                     sources=['pysolv/krylov_solv/f_cg.f90',
                              'pysolv/tools/f_tools.f90'],
-                    extra_f90_compile_args=['-fcheck=all', '-O3'],
+                    extra_f90_compile_args=compile_args,
                     library_dirs=['/usr/lib'],
                     libraries=['lapack', 'blas']
                 )
@@ -37,7 +39,7 @@ f_sd = Extension(
                     name='pysolv.f_lib.f_sd',
                     sources=['pysolv/oneD_proj_solv/f_sd.f90',
                              'pysolv/tools/f_tools.f90'],
-                    extra_f90_compile_args=['-fcheck=all', '-O3'],
+                    extra_f90_compile_args=compile_args,
                     library_dirs=['/usr/lib'],
                     libraries=['lapack', 'blas']
                 )

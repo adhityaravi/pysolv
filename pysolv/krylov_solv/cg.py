@@ -42,17 +42,17 @@ class CGSolve(Data):
         # initial residual and search direction
         # dir = res = b - A.x_0
         res = self.b - self.A.dot(self.x)
-        dir = res.copy()
+        dir_ = res.copy()
 
         while iter < self.itermax:
             # compute the step size: alpha = res.res / dir.(A.dir)
             rdr = res.dot(res)
-            Add = self.A.dot(dir)
-            ddAdd = dir.dot(Add)
+            Add = self.A.dot(dir_)
+            ddAdd = dir_.dot(Add)
             alpha = rdr / ddAdd
 
             # compute the new solution
-            self.x = self.x + (alpha * dir)
+            self.x = self.x + (alpha * dir_)
 
             # update the residual
             res = res - (alpha * Add)
@@ -65,7 +65,7 @@ class CGSolve(Data):
             beta = (res.dot(res)) / rdr
 
             # update the search direction
-            dir = res + (beta * dir)
+            dir_ = res + (beta * dir_)
 
             # update iteration counter
             iter += 1

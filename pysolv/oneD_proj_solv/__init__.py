@@ -22,3 +22,4 @@ left subspace is limited to 1, i.e, m = 1 --> K{1}, L{1}.
 
 # import the necessary packages
 from .sd import SDSolve
+from .minres import MinResSolve
