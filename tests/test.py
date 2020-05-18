@@ -4,10 +4,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import pysolv
 import numpy as np
-import scipy.io as io
+import numba as nb
 import time as ti
 import scipy.io as io
 from pysolv.f_lib import f_cgsolve
+from pysolv.nb_lib import nbc_cg
 
 #print(pysolv.__version__)
 
@@ -23,7 +24,7 @@ from pysolv.f_lib import f_cgsolve
 # b = [1, 1, 1]
 # b = np.array(b)
 
-A = io.mmread('nos6.mtx')
+A = io.mmread('nos7.mtx')
 A = A.toarray()
 
 n, *_ = A.shape
@@ -67,18 +68,23 @@ b = np.ones(n)
 # print('Done in {} s'.format(ti.time() - st))
 
 st = ti.time()
-x = pysolv.solve(A, b, 'CG')
+x = pysolv.solve(A, b, 'CG', itermax=9000)
 print('Done in {} s'.format(ti.time() - st))
 
-x = np.ones(n, order='F')
-
-A = np.array(A, order='F')
-b = np.array(b, order='F')
+x = np.ones(n)
 
 st = ti.time()
-f_cgsolve.init(A, b, 1e-6, 3000)
+f_cgsolve.init(A, b, 1e-6, 9000)
 f_cgsolve.solve(x)
 print('Done in {} s'.format(ti.time() - st))
+
+x = np.ones(n)
+
+st = ti.time()
+x = nbc_cg.solve(A, b, x, 1e-6, 9000)
+print('Done in {} s'.format(ti.time() - st))
+
+
 
 # st = ti.time()
 # x = pysolv.solve(A, b, 'GaussSeidel', itermax=100000)

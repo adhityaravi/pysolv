@@ -33,7 +33,7 @@ class CGSolve(Data):
             self.x = np.ones(self.n)
 
     def _py_solve(self):
-        """Conjugate gradient iterations
+        """Conjugate gradient iterations (dropped support)
         """
 
         # initialize the iteration counter
@@ -80,13 +80,9 @@ class CGSolve(Data):
 
         # conjugate gradient iterations
         else:
-            if self.n <= 400:
-                # call the fortran cg solver
-                f_cgsolve.init(self.A, self.b, self.tol, self.itermax)
-                f_cgsolve.solve(self.x)
-            else:
-                # call the python cg solver
-                self._py_solve()
+            # call the fortran cg solver
+            f_cgsolve.init(self.A, self.b, self.tol, self.itermax)
+            f_cgsolve.solve(self.x)
 
             # add the solution to the Data class
             Data.add_data('x', self.x)
