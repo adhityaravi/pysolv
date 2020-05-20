@@ -4,12 +4,12 @@ A set of tool functions to assist the various function/classes of the pysolv pac
 """
 
 # import the necessary packages
-from pysolv.data import Data
 import re
-from krylov_solv import *
-from st_iter_solv import *
-from exceptions import *
+from pysolv.krylov_solv import *
+from pysolv.st_iter_solv import *
+from pysolv.exceptions import *
 import numpy as np
+from pysolv.data import Data
 
 
 def check_solver(solver):
@@ -89,6 +89,9 @@ def call_solver():
 
     elif Data.solver == 'ssor':
         SORSolve(symmetric_solve=True)
+
+    elif Data.solver == 'cg':
+        CGSolve()
 
     else:
         print('wubba lubba dub dub')
