@@ -24,6 +24,5 @@ build/
 *egg-info/
 wheelhouse/
 
-
 # ignore any fortran binaries built in the local machine
 *.so
