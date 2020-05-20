@@ -14,3 +14,7 @@ clean: clean-pyc clean-build
 # create a personal build of the project
 build: clean
 	python setup.py build_ext --build-lib .
+
+# create a bdist wheel of pysolv
+build-wheel: clean
+	sudo bash dockerfile

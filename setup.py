@@ -11,8 +11,9 @@ f_sor = Extension(
                     sources=['pysolv/st_iter_solv/f_sor.f90',
                              'pysolv/tools/f_tools.f90'],
                     extra_f90_compile_args=['-fcheck=all', '-O3'],
-                    library_dirs=['/usr/lib'],
-                    libraries=['lapack', 'blas']
+                    library_dirs=['/usr/lib64', '/usr/lib'],
+                    include_dirs=['/usr/include'],
+                    libraries=['openblas']
                  )
 
 f_jacobi = Extension(
@@ -20,10 +21,10 @@ f_jacobi = Extension(
                     sources=['pysolv/st_iter_solv/f_jacobi.f90',
                              'pysolv/tools/f_tools.f90'],
                     extra_f90_compile_args=['-fcheck=all', '-O3'],
-                    library_dirs=['/usr/lib'],
-                    libraries=['lapack', 'blas']
+                    library_dirs=['/usr/lib64', '/usr/lib'],
+                    include_dirs=['/usr/include'],
+                    libraries=['openblas']
                  )
-
 
 # Setup
 with open("README.md", "r") as fh:
