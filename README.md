@@ -1,12 +1,15 @@
 # PySolv
 
+## Overview
+
 <p>A collection of linear solvers including stationary iterative solvers like Gauss-Siedel (GS), Jacobi (JM), Successive 
 over-relaxation (SOR) and Krylov subspace methods like Conjugate gradient (CG), generalized minimal residual (GMRES) 
 etc for Python 3.</p>
 
-<p>The motivation behind PySolv is to create one-stop-shop python package for most of the available iterative linear 
-solvers. PySolv is focused majorly on iterative linear solvers and currently PySolv is not intended to be a generalized
-linear algebra package with functionalities like singular value decomposition, matrix factorizations etc.</p>
+<p>The motivation behind PySolv is to provide a complete collection of possible different ways to solve a system of 
+linear equations starting from the most basic solver like the Jacobi to complex subspace methods. Therfore, this package 
+could be used for benchmarking, testing and educational purposes. Even though, this solver is not aimed at being the 
+fastest, to achieve decent run times, fortran bindings are used for most of the solvers</p>
 
 ## Getting started
 
@@ -18,8 +21,13 @@ PySolv requires a Python version of 3.6 or higher. To check the Python version, 
 
     python --version
     
-Additional packages required by PySolv are:<br>
+Additional python packages required by PySolv are:<br>
 1. [NumPy][1] (>=1.18)
+
+In case of building the package from source, the following additional dependencies are necessary:
+1. A fortran compiler, for example, [gfortran][5]  (>=7.5)
+2. LAPACK and BLAS library from a vendor, for example [OpenBLAS][6]. [OpenBLAS][6] or [ATLAS][7] is recommended over 
+[The Netlib][8] for performance
 
 ### Installation
 
@@ -27,6 +35,10 @@ Given that, all the requirements are satisfied, the PySolv package can be instal
 command:
 
     pip install pysolv
+    
+### Building from source
+
+To-Do 
     
 ### Testing
 
@@ -93,8 +105,14 @@ PySolv can be imported into Python using the following command
 ## References
 1. [Dr. Bojana Rosics's lectures, Institute of Scientific Computing, TU Braunschweig][2]
 2. [Iterative solver for sparse linear systems, Yousef Saad][3]
+3. [Adaptive SOR methods based on Wolfe conditions, Miyatake et al.][4]
 
 
 [1]: https://numpy.org/
 [2]: https://www.tu-braunschweig.de/en/wire/teaching/previous-terms/winter-2016-17
 [3]: https://www-users.cs.umn.edu/~saad/IterMethBook_2ndEd.pdf
+[4]: https://link.springer.com/article/10.1007/s11075-019-00748-0
+[5]: https://gcc.gnu.org/wiki/GFortran
+[6]: https://www.openblas.net/
+[7]: http://math-atlas.sourceforge.net/
+[8]: https://www.netlib.org/lapack/lug/node11.html
