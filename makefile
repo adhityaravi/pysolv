@@ -5,7 +5,7 @@ clean-pyc:
 # clean all the personal builds for the project including packaging related files
 clean-build:
 	rm --force --recursive build/
-	rm --force --recursive dist/
+	rm --force --recursive wheelhouse/
 	rm --force --recursive *.egg-info
 
 # clean all
@@ -17,4 +17,4 @@ build: clean
 
 # create a bdist wheel of pysolv
 build-wheel: clean
-	sudo bash dockerfile
+	sudo bash build_tools/dockerfile.sh $(shell pwd)

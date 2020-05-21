@@ -1,4 +1,7 @@
-#! /bin/sh
+#! /bin/bash
+
+# path to pysolv
+PWD=$1
 
 # error handling
 set -e -x
@@ -26,7 +29,7 @@ pull_docker() {
 # create a container with the given name from the specified docker image
 create_container() {
   # create the new container
-  docker run --name "$CONTAINER_NAME" -d -it -v $(pwd):/io "$DOCKER_IMAGE_NAME":"$DOCKER_IMAGE_TAG"
+  docker run --name "$CONTAINER_NAME" -d -it -v "$PWD":/io "$DOCKER_IMAGE_NAME":"$DOCKER_IMAGE_TAG"
   # install the required dependencies for pysolv
   # OpenBLAS
   docker exec -it "$CONTAINER_NAME" yum install openblas-devel
@@ -60,7 +63,7 @@ check_io() {
 
 # build the pysolv distribution wheel from inside the container
 build_wheel() {
-  docker exec -it "$CONTAINER_NAME" bash io/build-wheels.sh
+  docker exec -it "$CONTAINER_NAME" bash io/build_tools/build_wheel.sh
 }
 
 # Building the wheel for production through a CentOS 5.11 docker (manylinux)
